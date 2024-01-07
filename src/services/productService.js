@@ -37,4 +37,4 @@ async function getProductByIdFromConvictional(productId) {
     }
 }
 
-module.exports = {getAllProductsFromConvictional, getProductByIdFromConvictional}
+module.exports = {getAllProductsFromConvictional, getProductByIdFromConvictional, CustomError}

@@ -8,7 +8,7 @@ router.get('/:id', validateProductId, ProductController.getProductById)
 function validateProductId(req, res, next) {
     const productId = req.params.id;
     if (!productId || !/^\d+$/.test(productId)) {
-        return res.status(400).json({error: 'Invalid ID supplied'})
+        return res.status(400).json({ error: { message: 'Invalid ID supplied' }})
     }
     next();
 }

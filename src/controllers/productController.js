@@ -1,5 +1,6 @@
 const ProductService = require('../services/productService');
 const ProductAdapter = require('../adapters/productAdapter');
+const { CustomError } = require('../services/productService');
 
 async function getAllProducts(req, res) {
     try {
