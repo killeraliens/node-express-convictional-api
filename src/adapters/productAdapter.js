@@ -5,12 +5,12 @@ function formatProductsFromConvictional(rawProducts) {
 
 function formatProductFromConvictional(rawProduct) {
     const formattedProduct = {
-        code: rawProduct.id,
+        code: rawProduct.id, // assumed mapping
         title: rawProduct.title || "",
         vendor: rawProduct.vendor || "",
         bodyHtml: rawProduct.body_html || "",
         variants: rawProduct.variants.map(v => formatVariantFromConvictional(v)) ?? [], // format 
-        images: getImagesFromConvictionalVariants(rawProduct.variants) ?? [] // collect images from the variants
+        images: formatImagesFromConvictionalVariants(rawProduct.variants) ?? [] // collect images from the variants
     }
     
     return formattedProduct; 
@@ -21,7 +21,7 @@ function formatVariantFromConvictional(rawVariant) {
         id: rawVariant.id || "",
         title: rawVariant.title || "",
         sku: rawVariant.sku || "",
-        available: (rawVariant.inventory_quantity ?? 0) === 0 ? false: true, // True if inventory > 0, false otherwise
+        available: (rawVariant.inventory_quantity ?? 0) === 0 ? false : true, // True if inventory > 0, false otherwise
         inventoryQuantity: rawVariant.inventory_quantity || 0, // Inventory for given variant, should be 0 if no information provided
         weight: formatWeight(rawVariant.weight, rawVariant.weight_unit),
     }
@@ -44,12 +44,12 @@ function formatWeight(weight, weightUnit) {
     }
 }
 
-function getImagesFromConvictionalVariants(rawVariants) {
+function formatImagesFromConvictionalVariants(rawVariants) {
     let formattedImages = []
     for (let i = 0; i < rawVariants.length; i++) {
         if (rawVariants[i].images) {
             const variantId = rawVariants[i].id;
-            const variantFormattedImages = rawVariants[i].images.map(image => formatImage(image, variantId));
+            const variantFormattedImages = rawVariants[i].images.map(image => formatImage(image, variantId)) ?? [];
             formattedImages = formattedImages.concat(variantFormattedImages)
         }
     }
